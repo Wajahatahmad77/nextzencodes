@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenByte Solutions - Digital Solutions & Web Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0b0b0b 0%, #303d53 100%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Stars Background */
+        .stars-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+            box-shadow: 0 0 2px #ffffff;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        /* Shooting Stars - ENHANCED */
+        .shooting-star {
+            position: fixed;
+            width: 3px;
+            height: 150px;
+            background: linear-gradient(180deg, rgba(0, 217, 255, 1), rgba(0, 217, 255, 0.8), rgba(179, 36, 255, 0.6), transparent);
+            opacity: 1;
+            animation: shootingStar 2.5s ease-in forwards;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.8), 0 0 20px rgba(0, 217, 255, 0.4);
+            pointer-events: none;
+        }
+
+        @keyframes shootingStar {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(-45deg);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(500px, 500px) rotate(-45deg);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1a2a4e;
+            box-shadow: 0 4px 20px rgba(0, 217, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: glowPulse 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 10px rgba(0, 217, 255, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(0, 217, 255, 0.8); }
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: conic-gradient(from 0deg, #0099ff, #00d9ff, #b324ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.7rem;
+            color: white;
+            animation: spinGlow 3s linear infinite;
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.6);
+        }
+
+        @keyframes spinGlow {
+            0% { transform: rotate(0deg); box-shadow: 0 0 10px rgba(0, 217, 255, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(0, 217, 255, 0.8); }
+            100% { transform: rotate(360deg); box-shadow: 0 0 10px rgba(0, 217, 255, 0.4); }
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #a0a0a0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 0;
+            display: block;
+            cursor: pointer;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d9ff, #b324ff);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: #00d9ff;
+            text-shadow: 0 0 10px #00d9ff;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            position: relative;
+            z-index: 100;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero-wrapper {
+            max-width: 1100px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            border: 2px solid #1a3a5e;
+            border-radius: 20px;
+            padding: 4rem;
+            background: rgba(10, 20, 50, 0.6);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 217, 255, 0.1);
+            z-index: 100;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #0099ff 0%, transparent 70%);
+            opacity: 0.03;
+            top: -100px;
+            right: -100px;
+            z-index: 1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.03; }
+            50% { opacity: 0.08; }
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 2;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(0, 217, 255, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(0, 217, 255, 0.6); }
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, #00d9ff, #b324ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: #a0a0a0;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* BUTTON GLOW EFFECT - ALL BUTTONS */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border: 2px solid #00d9ff;
+            background: transparent;
+            color: #00d9ff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: fadeInUp 0.8s ease-out 0.3s both, buttonGlow 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5), inset 0 0 10px rgba(0, 217, 255, 0.1);
+        }
+
+        @keyframes buttonGlow {
+            0% {
+                box-shadow: 0 0 10px rgba(0, 217, 255, 0.3), inset 0 0 5px rgba(0, 217, 255, 0);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 217, 255, 0.7), inset 0 0 15px rgba(0, 217, 255, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(0, 217, 255, 0.3), inset 0 0 5px rgba(0, 217, 255, 0);
+            }
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: #00d9ff;
+            color: #050813;
+            box-shadow: 0 0 40px #00d9ff, inset 0 0 20px rgba(0, 217, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .devices-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            perspective: 1000px;
+        }
+
+        .phone-mockup {
+            position: absolute;
+            width: 160px;
+            height: 280px;
+            background: linear-gradient(135deg, #0099ff, #00d9ff);
+            border-radius: 30px;
+            padding: 8px;
+            left: 20px;
+            top: 20px;
+            box-shadow: 0 25px 50px rgba(0, 217, 255, 0.25);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #0a0e27);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #00d9ff;
+        }
+
+        .phone-screen::before {
+            content: '{ }';
+            font-size: 2rem;
+            color: #00d9ff;
+            opacity: 0.5;
+        }
+
+        .monitor-mockup {
+            position: absolute;
+            width: 280px;
+            height: 190px;
+            background: linear-gradient(135deg, #b324ff, #0099ff);
+            border-radius: 20px;
+            padding: 8px;
+            right: 10px;
+            bottom: 30px;
+            box-shadow: 0 25px 50px rgba(179, 36, 255, 0.25);
+            animation: float 3s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+
+        .monitor-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #0a0e27);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #b324ff;
+        }
+
+        .monitor-screen::before {
+            content: '📊';
+            font-size: 3rem;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* About Section */
+        .about {
+            max-width: 1100px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 100;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            animation: slideInDown 0.8s ease-out;
+            color: #00d9ff;
+            text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: #00d9ff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .about-text p {
+            color: #a0a0a0;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+            border: 2px solid #1a3a5e;
+            border-radius: 10px;
+            text-align: center;
+            background: rgba(26, 42, 78, 0.3);
+            transition: all 0.3s;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .stat-item:hover {
+            border-color: #00d9ff;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            color: #00d9ff;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: #a0a0a0;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Services Section */
+        .services {
+            max-width: 1100px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 100;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            border: 2px solid #1a3a5e;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            height: 350px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(5, 8, 19, 0) 0%, rgba(5, 8, 19, 0.9) 100%);
+            z-index: 1;
+        }
+
+        .service-content {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card h3 {
+            color: #00d9ff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .service-card p {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+        }
+
+        .service-card:hover {
+            border-color: #00d9ff;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 217, 255, 0.2);
+        }
+
+        /* Industries Section */
+        .industries {
+            max-width: 1100px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 100;
+        }
+
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+        }
+
+        .industry-card {
+            border: 2px solid #1a3a5e;
+            border-radius: 15px;
+            background: rgba(26, 42, 78, 0.4);
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .industry-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .industry-content {
+            padding: 1.8rem 1.5rem 2rem;
+            text-align: center;
+            flex: 1;
+        }
+
+        .industry-card h3 {
+            color: #00d9ff;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .industry-card p {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            margin-top: 0.4rem;
+        }
+
+        .industry-card:hover {
+            border-color: #00d9ff;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 217, 255, 0.2);
+        }
+
+        .industry-card:hover .industry-image {
+            transform: scale(1.1);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            max-width: 1100px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 100;
+        }
+
+        .stats-item {
+            text-align: center;
+            padding: 2rem;
+            border: 2px solid #1a3a5e;
+            border-radius: 10px;
+            background: rgba(26, 42, 78, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .stats-item:hover::before {
+            left: 100%;
+        }
+
+        .stats-item:hover {
+            border-color: #00d9ff;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .stats-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: iconBounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.4));
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .stats-number {
+            font-size: 2.8rem;
+            color: #00d9ff;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+            animation: numberGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes numberGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(0, 217, 255, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(0, 217, 255, 0.8); }
+        }
+
+        .stats-text {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            max-width: 1100px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 100;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            padding: 2rem;
+            border: 2px solid #1a3a5e;
+            border-radius: 15px;
+            background: rgba(26, 42, 78, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .testimonial-card:hover {
+            border-color: #00d9ff;
+            box-shadow: 0 20px 50px rgba(0, 217, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-text {
+            color: #a0a0a0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0099ff, #b324ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: avatarPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes avatarPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 217, 255, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(0, 217, 255, 0.6); }
+        }
+
+        .author-info h4 {
+            color: #00d9ff;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: #a0a0a0;
+            font-size: 0.85rem;
+        }
+
+        /* Clients Section */
+        .clients {
+            max-width: 1100px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 100;
+        }
+
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+        }
+
+        .client-item {
+            padding: 2rem;
+            border: 2px solid #1a3a5e;
+            border-radius: 10px;
+            background: rgba(26, 42, 78, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .client-item:hover {
+            border-color: #00d9ff;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .client-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d9ff, #b324ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            max-width: 1100px;
+            margin: 5rem auto;
+            padding: 3rem 2rem;
+            border: 2px solid #1a3a5e;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(0, 153, 255, 0.1), rgba(179, 36, 255, 0.1));
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.1);
+            position: relative;
+            z-index: 100;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #00d9ff;
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        .cta-section p {
+            color: #a0a0a0;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 4rem 2rem;
+            animation: slideInDown 0.8s ease-out;
+            position: relative;
+            z-index: 100;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #00d9ff, #b324ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-section {
+            margin: 5rem auto;
+            position: relative;
+            z-index: 100;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-card {
+            border: 2px solid #1a3a5e;
+            border-radius: 15px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            height: 380px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(5, 8, 19, 0) 0%, rgba(5, 8, 19, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .portfolio-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            z-index: 3;
+        }
+
+        .portfolio-card h3 {
+            font-size: 1.5rem;
+            color: #00d9ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-card p {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .portfolio-card:hover {
+            border-color: #00d9ff;
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(0, 217, 255, 0.3);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            margin: 3rem auto 5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+            position: relative;
+            z-index: 100;
+        }
+
+        .contact-info {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .info-item {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            border: 2px solid #1a3a5e;
+            border-radius: 10px;
+            background: rgba(26, 42, 78, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            border-color: #00d9ff;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+        }
+
+        .info-item h3 {
+            color: #00d9ff;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-item p {
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+
+        .info-item a {
+            color: #00d9ff;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .info-item a:hover {
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
+        }
+
+        .contact-form {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00d9ff;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #1a3a5e;
+            border-radius: 8px;
+            background: rgba(26, 42, 78, 0.5);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #7a7a7a;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #00d9ff;
+            background: rgba(26, 42, 78, 0.7);
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* BUTTON SUBMIT GLOW */
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #00d9ff;
+            background: transparent;
+            color: #00d9ff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: buttonGlow 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.5), inset 0 0 10px rgba(0, 217, 255, 0.1);
+        }
+
+        .btn-submit:hover {
+            background: #00d9ff;
+            color: #050813;
+            box-shadow: 0 0 40px #00d9ff, inset 0 0 20px rgba(0, 217, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .form-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(0, 217, 255, 0.2);
+            color: #00d9ff;
+            border: 1px solid #00d9ff;
+            display: block;
+        }
+
+        .form-message.error {
+            background: rgba(255, 100, 100, 0.2);
+            color: #ff6464;
+            border: 1px solid #ff6464;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 14, 39, 0.95);
+            border-top: 1px solid #1a2a4e;
+            margin-top: 5rem;
+            color: #a0a0a0;
+            box-shadow: 0 -4px 20px rgba(0, 217, 255, 0.1);
+            position: relative;
+            z-index: 100;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h4 {
+            color: #00d9ff;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #00d9ff;
+            margin-bottom: 1.5rem;
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+
+        .footer-about {
+            color: #a0a0a0;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #1a3a5e;
+            border-radius: 50%;
+            color: #00d9ff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .social-links a:hover {
+            border-color: #00d9ff;
+            background: rgba(0, 217, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: #00d9ff;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+            padding-left: 0.5rem;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-icon {
+            flex-shrink: 0;
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .contact-item a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            word-break: break-word;
+        }
+
+        .contact-item a:hover {
+            color: #00d9ff;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+        }
+
+        .contact-item span {
+            color: #a0a0a0;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1a2a4e;
+            padding: 2rem;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-legal a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-legal a:hover {
+            color: #00d9ff;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                font-size: 0.75rem;
+            }
+
+            .hero {
+                flex-direction: column;
+                padding: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .footer-legal {
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars Background -->
+    <div class="stars-bg" id="starsContainer"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo" onclick="showPage('home')">
+            <div class="logo-icon">Z</div>
+            <span>ZenByte Solutions</span>
+        </div>
+        <ul>
+            <li><a onclick="showPage('home')">HOME</a></li>
+            <li><a onclick="showPage('home')">SERVICES</a></li>
+            <li><a onclick="showPage('portfolio')">PORTFOLIO</a></li>
+            <li><a onclick="showPage('home')">ABOUT</a></li>
+            <li><a onclick="showPage('contact')">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <div class="hero-wrapper">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>WHERE NEXT-GEN <br>TECHNOLOGY <span>MEETS PRECISION</span></h1>
+                    <p>We provide cutting-edge digital solutions that help your business rank higher, grow faster, and stand out in a competitive market.</p>
+                    <a onclick="showPage('contact')" class="btn">Get Started</a>
+                </div>
+                <div class="hero-image">
+                    <div class="devices-container">
+                        <div class="phone-mockup">
+                            <div class="phone-screen"></div>
+                        </div>
+                        <div class="monitor-mockup">
+                            <div class="monitor-screen"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <h2 class="section-title">ABOUT ZENBYTE SOLUTIONS</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Your Trusted Digital Partner</h3>
+                    <p>ZenByte Solutions is a leading digital solutions company dedicated to helping businesses transform their online presence and achieve measurable growth.</p>
+                    <p>Since our inception, we've been committed to delivering results-focused solutions with exceptional quality and dedication. Our team of creative thinkers combines cutting-edge technology with proven strategies to create lasting impact for our clients.</p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Projects Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5★</div>
+                            <div class="stat-label">Client Rating</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Support</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p style="color: #a0a0a0; line-height: 1.8; margin-top: 2rem;">We understand that every business is unique. That's why we tailor our services to meet your specific needs and goals. Whether you're looking for web development, app creation, SEO optimization, or complete digital transformation, we're here to help you succeed.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <h2 class="section-title">OUR SERVICES</h2>
+            <div class="services-grid">
+                <div class="service-card" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800');">
+                    <div class="service-content">
+                        <h3>WORDPRESS DEV</h3>
+                        <p>Custom Themes & Robust Plugins for powerful websites</p>
+                    </div>
+                </div>
+
+                <div class="service-card" style="background-image: url('https://images.unsplash.com/photo-1559526324-593bc073d938?w=800');">
+                    <div class="service-content">
+                        <h3>SEO SERVICES</h3>
+                        <p>Rank Higher, Grow Traffic with proven SEO strategies</p>
+                    </div>
+                </div>
+
+                <div class="service-card" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800');">
+                    <div class="service-content">
+                        <h3>APP / WEB DEV</h3>
+                        <p>Mobile & Web Solutions built for modern users</p>
+                    </div>
+                </div>
+
+                <div class="service-card" style="background-image: url('https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?w=800');">
+                    <div class="service-content">
+                        <h3>GRAPHIC DESIGN</h3>
+                        <p>Creative branding and stunning visual identities</p>
+                    </div>
+                </div>
+
+                <div class="service-card" style="background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800');">
+                    <div class="service-content">
+                        <h3>DIGITAL MARKETING</h3>
+                        <p>Social media, content, and performance marketing</p>
+                    </div>
+                </div>
+
+                <div class="service-card" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800');">
+                    <div class="service-content">
+                        <h3>VIDEO PRODUCTION</h3>
+                        <p>Professional video content that engages and converts</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Industries Section -->
+        <section class="industries">
+            <h2 class="section-title">INDUSTRIES WE WORK WITH</h2>
+            <div class="industries-grid">
+                <div class="industry-card">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=200&fit=crop&q=80" alt="Technology" class="industry-image">
+                    <div class="industry-content">
+                        <h3>Technology</h3>
+                        <p>Innovative Solutions</p>
+                    </div>
+                </div>
+
+                <div class="industry-card">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&h=200&fit=crop&q=80" alt="Healthcare" class="industry-image">
+                    <div class="industry-content">
+                        <h3>Healthcare</h3>
+                        <p>Medical Excellence</p>
+                    </div>
+                </div>
+
+                <div class="industry-card">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=200&fit=crop&q=80" alt="Education" class="industry-image">
+                    <div class="industry-content">
+                        <h3>Education</h3>
+                        <p>Learning Reimagined</p>
+                    </div>
+                </div>
+
+                <div class="industry-card">
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=400&h=200&fit=crop&q=80" alt="E-commerce" class="industry-image">
+                    <div class="industry-content">
+                        <h3>E-commerce</h3>
+                        <p>Digital Retail</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-item">
+                <div class="stats-icon">🚀</div>
+                <div class="stats-number">100+</div>
+                <div class="stats-text">Projects Delivered</div>
+            </div>
+            <div class="stats-item">
+                <div class="stats-icon">👥</div>
+                <div class="stats-number">20+</div>
+                <div class="stats-text">Happy Clients</div>
+            </div>
+            <div class="stats-item">
+                <div class="stats-icon">⏰</div>
+                <div class="stats-number">5+</div>
+                <div class="stats-text">Years Experience</div>
+            </div>
+            <div class="stats-item">
+                <div class="stats-icon">⭐</div>
+                <div class="stats-number">99%</div>
+                <div class="stats-text">Client Satisfaction</div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <h2 class="section-title">CLIENT TESTIMONIALS</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"ZenByte Solution completely transformed our online presence. Their team was professional, responsive, and delivered results beyond our expectations!"</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AS</div>
+                        <div class="author-info">
+                            <h4>Ahmed Smith</h4>
+                            <p>Tech Startup CEO</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"Outstanding SEO services! Our website traffic increased by 300% within 6 months. Highly recommend their expertise and dedication."</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">FR</div>
+                        <div class="author-info">
+                            <h4>Fatima Rahman</h4>
+                            <p>E-commerce Manager</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"The team at ZenByte Solutions is incredibly talented and easy to work with. They understood our vision and executed it perfectly!"</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MK</div>
+                        <div class="author-info">
+                            <h4>Muhammad Khan</h4>
+                            <p>Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clients Section -->
+        <section class="clients">
+            <h2 class="section-title">OUR CLIENTS</h2>
+            <div class="clients-grid">
+                <div class="client-item">
+                    <div class="client-logo">TECH CO</div>
+                </div>
+                <div class="client-item">
+                    <div class="client-logo">FASHION X</div>
+                </div>
+                <div class="client-item">
+                    <div class="client-logo">FOOD PRO</div>
+                </div>
+                <div class="client-item">
+                    <div class="client-logo">RETAIL +</div>
+                </div>
+                <div class="client-item">
+                    <div class="client-logo">START UP</div>
+                </div>
+                <div class="client-item">
+                    <div class="client-logo">MEDIA.IO</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Ready to Transform Your Business?</h2>
+            <p>Get in touch with our team for a free consultation and discover how we can help you achieve your digital goals.</p>
+            <a onclick="showPage('contact')" class="btn">Get Free Consultation</a>
+        </section>
+    </div>
+
+    <!-- PORTFOLIO PAGE -->
+    <div id="portfolio" class="page">
+        <div class="page-header">
+            <h1>Our Portfolio</h1>
+            <p>Explore our latest projects and see how we've helped businesses transform their digital presence.</p>
+        </div>
+
+        <div class="container">
+            <section class="portfolio-section">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="portfolio-grid">
+                    <div class="portfolio-card" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800');">
+                        <div class="portfolio-content">
+                            <h3>WordPress Dev</h3>
+                            <p>Custom themes and robust plugins for powerful websites that drive results.</p>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card" style="background-image: url('https://images.unsplash.com/photo-1559526324-593bc073d938?w=800');">
+                        <div class="portfolio-content">
+                            <h3>SEO Services</h3>
+                            <p>Rank higher and grow traffic with proven SEO strategies and optimization.</p>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800');">
+                        <div class="portfolio-content">
+                            <h3>App / Web Dev</h3>
+                            <p>Mobile and web solutions built for modern users with cutting-edge tech.</p>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card" style="background-image: url('https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?w=800');">
+                        <div class="portfolio-content">
+                            <h3>Graphic Design</h3>
+                            <p>Creative branding and stunning visual identities that make impact.</p>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card" style="background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800');">
+                        <div class="portfolio-content">
+                            <h3>Digital Marketing</h3>
+                            <p>Social media, content, and performance marketing that converts.</p>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800');">
+                        <div class="portfolio-content">
+                            <h3>Video Production</h3>
+                            <p>Professional video content that engages and converts your audience.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <div class="page-header">
+            <h1>Get In Touch</h1>
+            <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        </div>
+
+        <div class="container">
+            <div class="contact-section">
+                <div class="contact-info">
+                    <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #00d9ff;">Contact Information</h2>
+
+                    <div class="info-item">
+                        <h3>📞 Phone</h3>
+                        <p><a href="tel:+923264549778">+92 326-454-9778</a></p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>📧 Email</h3>
+                        <p><a href="mailto:info@zenbytesolutions.com">info@zenbytesolutions.com</a></p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>💬 WhatsApp</h3>
+                        <p><a href="https://wa.me/923264549778" target="_blank">Chat with us on WhatsApp</a></p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>📍 Location</h3>
+                        <p>Pakistan</p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>🕒 Business Hours</h3>
+                        <p>Monday - Friday: 9:00 AM - 6:00 PM<br>
+                        Saturday: Closed<br>
+                        Sunday: Closed</p>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #00d9ff;">Send us a Message</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Your full name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+92 300-1234567">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <input type="text" id="subject" name="subject" placeholder="What is this about?" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" placeholder="Tell us more about your project..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="service">Service Interested In</label>
+                            <select id="service" name="service">
+                                <option value="">-- Select a service --</option>
+                                <option value="web-dev">Web Development</option>
+                                <option value="app-dev">App Development</option>
+                                <option value="seo">SEO Services</option>
+                                <option value="design">Graphic Design</option>
+                                <option value="marketing">Digital Marketing</option>
+                                <option value="video">Video Production</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Send Message</button>
+                        <div class="form-message" id="formMessage"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <!-- About Section -->
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <div class="logo-icon" style="width: 40px; height: 40px; font-size: 1rem;">Z</div>
+                    <span>ZenByte Solutions</span>
+                </div>
+                <p class="footer-about">Your trusted partner for digital solutions. We help businesses transform their online presence and achieve measurable growth through cutting-edge technology and proven strategies.</p>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" title="Facebook">f</a>
+                    <a href="https://twitter.com" target="_blank" title="Twitter">𝕏</a>
+                    <a href="https://linkedin.com" target="_blank" title="LinkedIn">in</a>
+                    <a href="https://instagram.com" target="_blank" title="Instagram">📷</a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h4>QUICK LINKS</h4>
+                <ul class="footer-links">
+                    <li><a onclick="showPage('home')">Home</a></li>
+                    <li><a onclick="showPage('home')">Services</a></li>
+                    <li><a onclick="showPage('portfolio')">Portfolio</a></li>
+                    <li><a onclick="showPage('home')">About Us</a></li>
+                    <li><a onclick="showPage('contact')">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-section">
+                <h4>SERVICES</h4>
+                <ul class="footer-links">
+                    <li><a href="#services">Web Development</a></li>
+                    <li><a href="#services">App Development</a></li>
+                    <li><a href="#services">SEO Services</a></li>
+                    <li><a href="#services">Digital Marketing</a></li>
+                    <li><a href="#services">Graphic Design</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-section">
+                <h4>GET IN TOUCH</h4>
+                <div class="footer-contact">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <a href="tel:+923264549778">+92 326-454-9778</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📧</span>
+                        <a href="mailto:info@zenbytesolutions.com">info@zenbytesolutions.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">💬</span>
+                        <a href="https://wa.me/923264549778" target="_blank">WhatsApp Us</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <span>Pakistan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>&copy; 2026 ZenByte Solutions. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Create starfield with shooting stars
+        function createStarfield() {
+            const container = document.getElementById('starsContainer');
+            
+            // Regular stars
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+
+            // Create shooting stars continuously
+            function createShootingStars() {
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const shootingStar = document.createElement('div');
+                        shootingStar.className = 'shooting-star';
+                        shootingStar.style.left = Math.random() * 100 + '%';
+                        shootingStar.style.top = Math.random() * 60 + '%';
+                        shootingStar.style.animationDelay = '0s';
+                        container.appendChild(shootingStar);
+                        
+                        // Remove after animation
+                        setTimeout(() => shootingStar.remove(), 2600);
+                    }, i * 500);
+                }
+            }
+
+            // Create shooting stars every 3 seconds
+            createShootingStars();
+            setInterval(createShootingStars, 3000);
+        }
+
+        // Show page function
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Contact Form Handler
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.getElementById('formMessage');
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const service = document.getElementById('service').value;
+
+            if (!name || !email || !subject || !message) {
+                formMessage.textContent = '⚠️ Please fill in all required fields.';
+                formMessage.className = 'form-message error';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                formMessage.textContent = '⚠️ Please enter a valid email address.';
+                formMessage.className = 'form-message error';
+                return;
+            }
+
+            const mailtoLink = `mailto:info@zenbytesolutions.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+                `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nService: ${service || 'Not specified'}\n\nMessage:\n${message}`
+            )}`;
+
+            window.location.href = mailtoLink;
+
+            formMessage.textContent = '✅ Thank you! Opening your email client to send your message.';
+            formMessage.className = 'form-message success';
+
+            setTimeout(() => {
+                contactForm.reset();
+                formMessage.className = 'form-message';
+            }, 3000);
+        });
+
+        // Initialize
+        createStarfield();
+    </script>
+</body>
+</html>
+
+add the service and the about us page for service page data eadd the section that is in our servoce and for the about us make a new professinall about us page and add links to respected pages in the footer  give me full code ok 
